@@ -1,96 +1,88 @@
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class Date {
-
-	//static Date date = new Date();
-	static String fechaInicio = "03/04/2017";
-	
-	static  String[] aFechaIng = fechaInicio.split("/");
-    static String day = aFechaIng[0];
-    static String month = aFechaIng[1];
-    static String year = aFechaIng[2];
-    
-    static int dayInt = Integer.parseInt(day);
-    static int monthInt = Integer.parseInt(month);
-    static int yearInt = Integer.parseInt(year);
-	//static String fechaInicio = "22/04/1988";
-	//static String fechaActual = "09/04/2015";
-    
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("¿Es el mismo año? "+ isSameYear(2017));
-		System.out.println("¿Es el mismo mes? "+ isSameMonth(2));
-		System.out.println("¿Es el mismo día? "+ isSameDay(21));
-		System.out.println("¿Es la misma fecha?"+ isSame(02, 04, 2017));
-		devolverMes(02);
-		System.out.println("¿Es el mismo día y mes que la fecha del programa? "+ comprobarDia(03, 04));
-		estacionAgno(04);
-		mesesRestantes(04);
-		imprimirFecha("02", "04", "2017");
-		imprimirFechasRestantesMes(02, 04, 2017);
-		
-	}
-
 	
 	
-	public static boolean isSameYear(int year2){
-		if(yearInt==year2){
-			return true;
-		}else{
-			return false;
-		}	
+	private int day;
+	private int month;
+	private int year;
+	
+	public Date(){
+		this.day=day;
+		this.month=month;
+		this.year=year;
 		
 	}
-	public static boolean isSameMonth(int month2){
-		if(monthInt==month2){
-			return true;
-		}else{
-			return false;
-		}	
-		
-	}
-	public static boolean isSameDay(int day2){
-		if(dayInt==day2){
-			return true;
-		}else{
-			return false;
-		}	
-		
-	}
-	public static boolean isSame(int day2, int month2, int year2){
-		if(dayInt==day2 && monthInt == month2 && yearInt==year2){
-			return true;
-		}else{
-			return false;
-		}	
-		
-	}
-	public static void devolverMes(int mes){
-		String mes1="";
-		switch(mes){
-			case 1: mes1="Enero"; break;
-			case 2: mes1="Febrero"; break;
-			case 3: mes1="Marzo";break;
-			case 4: mes1="Abril";break;
-			case 5: mes1="Mayo";break;
-			case 6: mes1="Junio";break;
-			case 7: mes1="Julio";break;
-			case 8: mes1="Agosto";break;
-			case 9: mes1="Septiembre";break;
-			case 10: mes1="Octubre";break;
-			case 11: mes1="Noviembre";break;
-			case 12: mes1="Diciembre";break;
+	
+	public Date(int day, int month, int year) throws Exception{
+		this.year = year;
+		if (month < 1 || month > 12) {
+			throw new Exception("Mes " + month + " no valido" +
+					" Valores posibles entre 1 y 12.");
+		} else {
+			this.month = month;
 			
 		}
-		System.out.println(mes1);
+		this.day=day;
+		
+		
 		
 	}
 	
-	public static boolean comprobarDia(int dia, int mes){
-		
-		if(dia==dayInt&&mes==monthInt){
+	
+	public int getDay() {
+		return day;
+	}
+
+	public void setDay(int day) {
+		this.day = day;
+	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+	
+	public Date tomorrow(){
+		Date fecha = new Date();
+		if(day==31 && (month == 1 || month ==3 || month ==5 || month == 7 || month == 8 || month ==10)){
+			fecha.setDay(1);
+			fecha.setMonth(month+1);
+			fecha.setYear(year);
+		}else if(day == 30 && (month==4 || month == 6 || month ==9)){
+			fecha.setDay(1);
+			fecha.setMonth(month+1);
+			fecha.setYear(year);
+		}else if(day == 28 && month == 2){
+			fecha.setDay(1);
+			fecha.setMonth(month+1);
+			fecha.setYear(year);
+		}else if(day == 31 && month == 12){
+			fecha.setDay(1);
+			fecha.setMonth(1);
+			fecha.setYear(year+1);
+		}else{
+			fecha.setDay(day+1);
+			fecha.setMonth(month);
+			fecha.setYear(year);
+		}
+		return fecha;
+	}
+	
+
+	public boolean isSameYear(int agno){
+		if(year==agno){
 			return true;
 		}else{
 			return false;
@@ -98,118 +90,365 @@ public class Date {
 		
 	}
 	
-	public static void estacionAgno(int mes){
-		String estacion="";
-		switch(mes){
-		case 3: case 4: case 5: estacion="Primavera"; break;
-		case 6: case 7: case 8: estacion ="Verano"; break;
-		case 9 : case 10: case 11: estacion="Otoño"; break;
-		case 12: case 1:case 2: estacion="Invierno"; break;
+	public boolean isSameMonth(int mes){
+		if(month==mes){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public boolean isSameDay(int dia){
+		if(day==dia){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public boolean isSame(int dia,int mes,int agno){
+		if(day==dia && month==mes && year==agno){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+//	public boolean isSameYearSwitch(int agno){
+//		
+//	}
+	
+	public boolean isSameMonthDoWhile(int mes){
+		do{
+			while(mes==month){
+				return true;
+			}
+			return false;
+		}while(mes!=month);
+		
+	}
+	
+	public boolean isSameDayFor(int dia){
+		for(int i=day; i==dia;){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isSameWhile(int dia,int mes,int agno){
+		while(agno==year && month==mes && day==dia){
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
+	
+	public String imprimirMes(){
+		String mesecito=null;
+		switch(month){
+			case 1: mesecito ="Enero";
+			break;
+			case 2: mesecito="Febrero";
+			break;
+			case 3: mesecito="Marzo";
+			break;
+			case 4: mesecito="Abril";
+			break;
+			case 5: mesecito="Mayo";
+			break;
+			case 6: mesecito="Junio";
+			break;
+			case 7: mesecito="Julio";
+			break;
+			case 8: mesecito="Agosto";
+			break;
+			case 9: mesecito="Septiembre";
+			break;
+			case 10: mesecito="Octubre";
+			break;
+			case 11: mesecito="Noviembre";
+			break;
+			case 12: mesecito="Diciembre";
+			break;
+		}
+		return mesecito;
+	}
+	
+	public int comprobarDia(){
+		if (month==1){
+			if (day<1 || day>31){
+				System.out.println("Día " + day + " no valido." +
+						" Valores posibles para Enero entre 1 y 31.");
+				return 0;
+			}else{
+				System.out.println("El día "+day+" para el mes "+month+ " es correcto.");
+				return 1;
+			}
+		}else
+		if (month==2){
+			if (day<1 || day>28){
+				System.out.println("Día " + day + " no valido." +
+						" Valores posibles para Febrero entre 1 y 28.");
+				return 0;
+			}else{
+				System.out.println("El día "+day+" para el mes "+month+ " es correcto.");
+				return 1;
+			}
+		}else
+		if (month==3){
+			if (day<1 || day>31){
+				System.out.println("Día " + day + " no valido." +
+						" Valores posibles para Marzo entre 1 y 31.");
+				return 0;
+			}else{
+				System.out.println("El día "+day+" para el mes "+month+ " es correcto.");
+				return 1;
+			}
+			
+		}else
+		if (month==4){
+			if (day<1 || day>30){
+				System.out.println("Día " + day + " no valido." +
+						" Valores posibles para Abril entre 1 y 30.");
+				return 0;
+			}else{
+				System.out.println("El día "+day+" para el mes "+month+ " es correcto.");
+				return 1;
+			}
+		}else
+		if (month==5){
+			if (day<1 || day>31){
+				System.out.println("Día " + day + " no valido." +
+						" Valores posibles para Mayo entre 1 y 31.");
+				return 0;
+			}else{
+				System.out.println("El día "+day+" para el mes "+month+ " es correcto.");
+				return 1;
+			}
+		}else
+		if (month==6){
+			if (day<1 || day>30){
+				System.out.println("Día " + day + " no valido." +
+						" Valores posibles para Junio entre 1 y 30.");
+				return 0;
+			}else{
+				System.out.println("El día "+day+" para el mes "+month+ " es correcto.");
+				return 1;
+			}
+		}else
+		if (month==7){
+			if (day<1 || day>31){
+				System.out.println("Día " + day + " no valido." +
+						" Valores posibles para Julio entre 1 y 31.");
+				return 0;
+			}else{
+				System.out.println("El día "+day+" para el mes "+month+ " es correcto.");
+				return 1;
+			}
+		}else
+		if (month==8){
+			if (day<1 || day>31){
+				System.out.println("Día " + day + " no valido." +
+						" Valores posibles para Agosto entre 1 y 31.");
+				return 0;
+			}else{
+				System.out.println("El día "+day+" para el mes "+month+ " es correcto.");
+				return 1;
+			}
+		}else
+		if (month==9){
+			if (day<1 || day>30){
+				System.out.println("Día " + day + " no valido." +
+						" Valores posibles para Septiembre entre 1 y 30.");
+				return 0;
+			}else{
+				System.out.println("El día "+day+" para el mes "+month+ " es correcto.");
+				return 1;
+			}
+		}else
+		if (month==10){
+			if (day<1 || day>31){
+				System.out.println("Día " + day + " no valido." +
+						" Valores posibles para Octubre entre 1 y 31.");
+				return 0;
+			}else{
+				System.out.println("El día "+day+" para el mes "+month+ " es correcto.");
+				return 1;
+			}
+		}else 
+		if (month==11){
+			if (day<1 || day>30){
+				System.out.println("Día " + day + " no valido." +
+						" Valores posibles para Noviembre entre 1 y 30.");
+				return 0;
+			}else{
+				System.out.println("El día "+day+" para el mes "+month+ " es correcto.");
+				return 1;
+			}
+		}else
+		if (month==12){
+			if (day<1 || day>31){
+				System.out.println("Día " + day + " no valido." +
+						" Valores posibles para Diciembre entre 1 y 31.");
+				return 0;
+			}else{
+				System.out.println("El día "+day+" para el mes "+month+ " es correcto.");
+				return 1;
+			}
+		}else{
+			System.out.println("El mes introducido no es valido.");
+			return 0;
 		}
 		
-		System.out.println(estacion);
 	}
 	
-	public static void mesesRestantes(int mes){
-		int diferencia = 12 - mes;
-		System.out.println("Los meses restantes hasta que acabe el año son: "+diferencia);
-	}
-	
-	public static void imprimirFecha(String dia, String mes, String agno){
-		System.out.println("La fecha que quiere imprimir es: "+dia+"/"+mes+"/"+agno);
-	}
-	
-	public static void imprimirFechasRestantesMes(int day, int mes, int agno){
-		int enero=31, febrero=28, marzo=31, abril =30, mayo=31, junio=30, julio=31,agosto=31,septiembre=30,octubre=31,noviembre=30,diciembre=31;
-		System.out.println("Las fechas restantes hasta que acabe el mes son: ");
-		if(mes==1){
-			for (int i = day; i < enero+1; i++) {
-				
-				System.out.println(day+"/0"+mes+"/"+agno);
-				day++;
-			}
-		}
-		if(mes==2){
-			for (int i = day; i < febrero+1; i++) {
-				
-				System.out.println(day+"/0"+mes+"/"+agno);
-				day++;
-			}
-		}
-		if(mes==3){
-			for (int i = day; i < marzo+1; i++) {
-				
-				System.out.println(day+"/0"+mes+"/"+agno);
-				day++;
-			}
-		}
-		if(mes==4){
-			for (int i = day; i < abril+1; i++) {
-				
-				System.out.println(day+"/0"+mes+"/"+agno);
-				day++;
-			}
-		}
-		if(mes==5){
-			for (int i = day; i < mayo+1; i++) {
-				
-				System.out.println(day+"/0"+mes+"/"+agno);
-				day++;
-			}
-		}
-		if(mes==6){
-			for (int i = day; i < junio+1; i++) {
-				
-				System.out.println(day+"/0"+mes+"/"+agno);
-				day++;
-			}
-		}if(mes==7){
-			for (int i = day; i < julio+1; i++) {
-				
-				System.out.println(day+"/0"+mes+"/"+agno);
-				day++;
-			}
-		}if(mes==8){
-			for (int i = day; i < agosto+1; i++) {
-				
-				System.out.println(day+"/0"+mes+"/"+agno);
-				day++;
-			}
-		}if(mes==9){
-			for (int i = day; i < septiembre+1; i++) {
-				
-				System.out.println(day+"/0"+mes+"/"+agno);
-				day++;
-			}
-		}if(mes==10){
-			for (int i = day; i < octubre+1; i++) {
-				
-				System.out.println(day+"/"+mes+"/"+agno);
-				day++;
-			}
-		}if(mes==11){
-			for (int i = day; i < noviembre+1; i++) {
-				
-				System.out.println(day+"/"+mes+"/"+agno);
-				day++;
-			}
-		}if(mes==12){
-			for (int i = day; i < diciembre+1; i++) {
-				
-				System.out.println(day+"/"+mes+"/"+agno);
-				day++;
-			}
-		}
-	
-	}
-	public static void mismosMeses(int dia, int mes, int agno){
-		if(mes==1 | mes==3 |mes==5|mes==7|mes==8|mes==10|mes==12){
-			System.out.println("Los meses de 31 dias son: Enero, Marzo, Mayo, Julio, Agosto, Octubre, Diciembre");
-		}else if(mes==2){
-			System.out.println("Los meses de 28 dias son: Febrero");
+	public String estaciones(){
+		String estacion=null;
+		if(day>=20 && day<=31 && month==3 || day>=1 && day<=30 && month==4 || day>=1 && day <=31 && month==5 || day>=1 && day<=20 && month==6){
+			estacion="La estación del año es primavera";
+		}else if(day>=21 && day<=30 && month==6 || day>=1 && day<=31 && month==7 || day>=1 && day <=31 && month==8 || day>=1 && day<=21 && month==9){
+			estacion="La estación del año es verano";
+		}else if(day>=22 && day<=30 && month==9 || day>=1 && day<=31 && month==10 || day>=1 && day <=30 && month==11 || day>=1 && day<=20 && month==12){
+			estacion="La estación del año es otoño";
+		}else if(day>=21 && day<=31 && month==12 || day>=1 && day<=31 && month==1 || day>=1 && day <=28 && month==2 || day>=1 && day<=19 && month==3){
+			estacion="La estación del año es invierno";
 		}else{
-			System.out.println("Los meses de 30 días son: Abril, Junio, Septiembre, Noviembre");
+			estacion="El día introducido no es correcto, prueba a meter otro día.";
 		}
+		return estacion;
+	}	
+	
+	public String quedanMeses(){
+		String mesesRestantes=null;
+		if(month==1){
+			mesesRestantes="Quedan Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre y Diciembre hasta final de año.";
+		}else if(month==2){
+			mesesRestantes="Quedan Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre y Diciembre hasta final de año.";
+		}else if(month==3){
+			mesesRestantes="Quedan Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre y Diciembre hasta final de año.";
+		}else if(month==4){
+			mesesRestantes="Quedan Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre y Diciembre hasta final de año.";
+		}else if(month==5){
+			mesesRestantes="Quedan Junio, Julio, Agosto, Septiembre, Octubre, Noviembre y Diciembre hasta final de año.";
+		}else if(month==6){
+			mesesRestantes="Quedan Julio, Agosto, Septiembre, Octubre, Noviembre y Diciembre hasta final de año.";
+		}else if(month==7){
+			mesesRestantes="Quedan Agosto, Septiembre, Octubre, Noviembre y Diciembre hasta final de año.";
+		}else if(month==8){
+			mesesRestantes="Quedan Septiembre, Octubre, Noviembre y Diciembre hasta final de año.";
+		}else if(month==9){
+			mesesRestantes="Quedan Octubre, Noviembre y Diciembre hasta final de año.";
+		}else if(month==10){
+			mesesRestantes="Quedan Noviembre y Diciembre hasta final de año.";
+		}else if(month==11){
+			mesesRestantes="Solo queda Diciembre hasta final de año.";
+		}else if(month==12){
+			mesesRestantes="No queda ningún mes hasta final de año.";
+		}
+		return mesesRestantes;
+	}
+	
+	public String toString() {
+		return this.day + "/" + this.month + "/" + this.year;
+	}
+	
+	public void diasQuedan(){
+		System.out.println("Fechas restantes hasta fin de mes:");
+		if(month==4 || month==6 || month==9 || month==11){
+			for(int i=day;i<31;i++){
+				System.out.println(i+"/"+month+"/"+year);
+			}
+		}else if(month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12){
+			for(int i=day;i<30;i++){
+				System.out.println(i+"/"+month+"/"+year);
+			}
+		}else if(month==2){
+			for(int i=day;i<28;i++){
+				System.out.println(i+"/"+month+"/"+year);
+			}
+		}
+	}
+	
+	public String mesesDias(){
+		String mesesRestantes=null;
+		if(month==4 || month==6 || month==9 || month==11){
+			mesesRestantes="Los meses con el mismo número de días que en el que estamos son Abril, Junio, Septiembre y Noviembre.";
+		}else if(month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12){
+			mesesRestantes="Los meses con el mismo número de días que en el que estamos son Enero, Marzo, Mayo, Julio, Agosto, Octubre y Diciembre.";
+		}else if(month==2){
+			mesesRestantes="Febrero es el único mes con este número de días.";
+		}
+		return mesesRestantes;
+	}
+	
+	public int diasPrimerDia(){
+		int numeroDias=0;
+		if (month==1){
+			numeroDias=day;
+		}else if (month==2){
+			numeroDias=31+day;
+		}else if (month==3){
+			numeroDias=31+28+day;
+		}else if (month==4){
+			numeroDias=31+28+31+day;
+		}else if (month==5){
+			numeroDias=31+28+31+30+day;
+		}else if (month==6){
+			numeroDias=31+28+31+30+31+day;
+		}else if (month==7){
+			numeroDias=31+28+31+30+31+30+day;
+		}else if (month==8){
+			numeroDias=31+28+31+30+31+30+31+day;
+		}else if (month==9){
+			numeroDias=31+28+31+30+31+30+31+31+day;
+		}else if (month==10){
+			numeroDias=31+28+31+30+31+30+31+31+30+day;
+		}else if (month==11){
+			numeroDias=31+28+31+30+31+30+31+31+30+31+day;
+		}else if (month==12){
+			numeroDias=31+28+31+30+31+30+31+31+30+31+30+day;
+		}
+		return numeroDias;
+	}
+	
+	public int numeroIntentosWhile(){
+		int dia2=0, mes2=0;
+		int intentos2=0;
+		while(dia2!=day || mes2!=month){
+			dia2=(int) Math.floor(Math.random()*(31-1+1)+1);
+			mes2=(int) Math.floor(Math.random()*(12-1+1)+1);
+			intentos2++;
+		}
+		return intentos2;
+	}
+	
+	public void numeroIntentosDoWhile(){
+		int dia2=0, mes2=0;
+		int intentos2=0;
+		do{
+			dia2=(int) Math.floor(Math.random()*(31-1+1)+1);
+			mes2=(int) Math.floor(Math.random()*(12-1+1)+1);
+			intentos2++;
+		}while(dia2!=day || mes2!=month);
+		System.out.println("El número de intentos hasta dar con la misma fecha son: "+intentos2);
+	}
+	
+	public void diasSemana(){
+		Calendar fecha = Calendar.getInstance();
+		fecha.set(Calendar.DATE, day+1);
+		fecha.set(Calendar.MONTH, month+1);
+		fecha.set(Calendar.YEAR, year+1);
+		
+		String[] strDays=new String[]{
+			"Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"
+		};
+		
+		System.out.println("El día de la semana de la fecha dada es: "+strDays[fecha.get(Calendar.DAY_OF_WEEK)-1]);
 	}
 
 }
+
+
+	
